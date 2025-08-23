@@ -1,0 +1,11 @@
+venv/
+
+
+.pylintrc
+__pycache/__
+
+.vscode
+.idea
+.env
+
+
