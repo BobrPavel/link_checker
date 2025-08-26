@@ -7,13 +7,13 @@ import openai
 from openai import OpenAIError
 
 
-openai_key = os.getenv("KEY")   # если создавать файл .env
+openai_key = os.getenv("KEY")  # если создавать файл .env
 
 # key = you_key
 # openai_key = os.getenv(key) # если не создавать файл .env
 
 
-async def fetch_real_url(input_url): # получение реального пути и количества редиректов
+async def fetch_real_url(input_url):  # получение реального пути и количества редиректов
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(input_url, allow_redirects=True) as response:
@@ -24,7 +24,7 @@ async def fetch_real_url(input_url): # получение реального п�
             return None, None
 
 
-async def fetch_site_data(input_url): # получение заголовка и
+async def fetch_site_data(input_url):  # получение заголовка и
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(input_url) as response:
@@ -53,7 +53,7 @@ async def fetch_site_data(input_url): # получение заголовка и
 async def ai_checker(input_url):
     try:
         prompt = [
-        f"Проверь эту ссылку: {input_url} Ответь одной строкой: Что это за сайт, является ли это примером typosquatting"
+            f"Проверь эту ссылку: {input_url} Ответь одной строкой: Что это за сайт, является ли это примером typosquatting"
         ]
 
         client = openai.AsyncOpenAI(api_key=openai_key)
@@ -63,6 +63,3 @@ async def ai_checker(input_url):
         return response.choices[0].message.content
     except OpenAIError:
         return None
-
-
-  

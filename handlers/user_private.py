@@ -1,3 +1,4 @@
+import asyncio
 from aiogram import F, types, Router
 from aiogram.filters import CommandStart, Command
 
@@ -33,44 +34,54 @@ async def help_cmd(message: types.Message):
 
 @user_private_router.message(F.text)
 async def lick_checher(message: types.Message):
-    input_url = message.text
+    input_url = message.text.strip()
 
-    status = await is_working_url(input_url)
-
-    if status is False:
+    if not await is_working_url(input_url):
         await message.answer("URL введён не правильно или не работает")
-    else:
-        real_url, redirect_count = await fetch_real_url(input_url)
-        title, description = await fetch_site_data(input_url)
-        print(real_url, redirect_count, title, description)
-        ai_check_result = await ai_checker(input_url)
+        return
 
-        if real_url is None or redirect_count is None or title is None or description is None:
-            await message.answer("Произошла внутренная ошибка")
-        else:
-            await message.answer(
-                "🔗 Результат проверки ссылки \n"
-                "\n"
-                "📍 Реальный адрес: \n"
-                f"{real_url} \n"
-                "🔗 Конечный адрес: \n"
-                f"{input_url} \n"
-                "\n"
-                f"🔄 Редиректы: всего: {redirect_count}\n"
-                "\n"
-                "📜 Заголовок сайта: \n"
-                f"{title} \n"
-                "📋 Описание сайта: \n"
-                f"{description} \n"
-                "\n"
-                "Что это за сайт и является ли это примером typosquatting? \n "
-                f"{ai_check_result}"
-            )
+    # Параллельно выполняем запросы
+    real_url_task = fetch_real_url(input_url)
+    site_data_task = fetch_site_data(input_url)
+    ai_check_task = ai_checker(input_url)
 
+    real_url_result, site_data_result, ai_check_result = await asyncio.gather(
+        real_url_task, site_data_task, ai_check_task, return_exceptions=True
+    )
+
+    # Проверка на ошибки
+    if (
+        isinstance(real_url_result, Exception)
+        or isinstance(site_data_result, Exception)
+        or isinstance(ai_check_result, Exception)
+    ):
+        await message.answer("Произошла внутренняя ошибка при обработке URL")
+        return
+
+    real_url, redirect_count = real_url_result
+    title, description = site_data_result
+
+    # Дополнительная проверка значений
+    if not all(
+        [real_url, redirect_count is not None, title, description, ai_check_result]
+    ):
+        await message.answer("Произошла внутренняя ошибка")
+        return
+
+    response = (
+        "🔗 Результат проверки ссылки\n\n"
+        f"📍 Реальный адрес:\n{real_url}\n"
+        f"🔗 Конечный адрес:\n{input_url}\n\n"
+        f"🔄 Редиректы: всего: {redirect_count}\n\n"
+        f"📜 Заголовок сайта:\n{title}\n"
+        f"📋 Описание сайта:\n{description}\n\n"
+        "Что это за сайт и является ли это примером typosquatting?\n"
+        f"{ai_check_result}"
+    )
+
+    await message.answer(response)
 
 
 @user_private_router.message()
 async def lick_checher2(message: types.Message):
     await message.answer("Пожалуйста введите ссылку")
-
-
