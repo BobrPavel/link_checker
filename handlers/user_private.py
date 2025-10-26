@@ -4,8 +4,14 @@ from aiogram.filters import CommandStart, Command
 
 from filters.chat_types import ChatTypeFilter
 
-from utils.validators import is_working_url
-from utils.check import ai_checker, fetch_real_url, fetch_site_data
+from services.validator import is_working_url
+from services.google_safe_browsing import check_google_safebrowsing
+from services.virustotal import check_virustotal
+from services.blacklist_check import check_blacklists
+from services.infrastructure_check import check_infrastructure
+
+from utils.cache import get_cache, set_cache
+from utils.scoring import calculate_risk_score
 
 
 user_private_router = Router()
@@ -33,55 +39,85 @@ async def help_cmd(message: types.Message):
 
 
 @user_private_router.message(F.text)
-async def lick_checher(message: types.Message):
-    input_url = message.text.strip()
+async def handle_link_check(message: types.Message):
+    url = message.text.strip()
 
-    if not await is_working_url(input_url):
-        await message.answer("URL введён не правильно или не работает")
+    # ✅ Проверяем валидность и доступность
+    if not await is_working_url(url):
+        await message.answer("🚫 Невалидная или недоступная ссылка.")
         return
 
-    # Параллельно выполняем запросы
-    real_url_task = fetch_real_url(input_url)
-    site_data_task = fetch_site_data(input_url)
-    ai_check_task = ai_checker(input_url)
+    # ⚡ Проверяем кэш
+    cached = get_cache(url)
+    if cached:
+        await message.answer(f"⚡ Результат из кэша:\n{cached['report']}", parse_mode="Markdown")
+        return
 
-    real_url_result, site_data_result, ai_check_result = await asyncio.gather(
-        real_url_task, site_data_task, ai_check_task, return_exceptions=True
+    await message.answer("🔍 Выполняю расширенную проверку сайта...")
+
+    # 🧠 Проверка в 4 источниках (параллельно)
+    google_res, vt_res, bl_res, infra = await asyncio.gather(
+        check_google_safebrowsing(url),
+        check_virustotal(url),
+        check_blacklists(url),
+        check_infrastructure(url)
     )
 
-    # Проверка на ошибки
-    if (
-        isinstance(real_url_result, Exception)
-        or isinstance(site_data_result, Exception)
-        or isinstance(ai_check_result, Exception)
-    ):
-        await message.answer("Произошла внутренняя ошибка при обработке URL")
-        return
+    # 🔎 Подсчёт риска
+    results = {
+        "google": google_res,
+        "vt": vt_res,
+        "blacklist": bl_res,
+        "infra": infra
+    }
 
-    real_url, redirect_count = real_url_result
-    title, description = site_data_result
+    level, score = calculate_risk_score(results)
 
-    # Дополнительная проверка значений
-    if not all(
-        [real_url, redirect_count is not None, title, description, ai_check_result]
-    ):
-        await message.answer("Произошла внутренняя ошибка")
-        return
+    # 🧾 Формирование текста отчёта
+    ssl_info = infra.get("ssl_info", {})
+    ip_info = infra.get("ip_info", {})
 
-    response = (
-        "🔗 Результат проверки ссылки\n\n"
-        f"📍 Реальный адрес:\n{real_url}\n"
-        f"🔗 Конечный адрес:\n{input_url}\n\n"
-        f"🔄 Редиректы: всего: {redirect_count}\n\n"
-        f"📜 Заголовок сайта:\n{title}\n"
-        f"📋 Описание сайта:\n{description}\n\n"
-        "Что это за сайт и является ли это примером typosquatting?\n"
-        f"{ai_check_result}"
+    text = (
+        f"🔗 *Проверка ссылки:* {url}\n\n"
+        f"🧭 Google Safe Browsing: {google_res['status']}\n"
+        f"🧪 VirusTotal: {vt_res['status']}\n"
+        f"🚨 Blacklists: {bl_res['status']}\n\n"
+        f"⚠️ *Уровень риска:* {level.upper()} ({score} баллов)\n\n"
+        f"🌐 *Инфраструктура сайта:*\n"
+        f"🏠 Домен: `{infra['hostname']}`\n"
+        f"🔒 HTTPS: {'Да' if infra['is_https'] else 'Нет'}\n"
     )
 
-    await message.answer(response)
+    # SSL-инфо
+    if ssl_info.get("valid"):
+        text += (
+            f"📜 Сертификат выдан: *{ssl_info.get('issued_by', 'N/A')}*\n"
+            f"📅 Действителен до: `{ssl_info.get('valid_to', 'N/A')}`\n"
+            f"🕐 Осталось дней: `{ssl_info.get('days_left', 'N/A')}`\n"
+        )
+    else:
+        text += f"⚠️ SSL: {ssl_info.get('error', 'Нет данных')}\n"
 
+    # IP и хостинг
+    text += (
+        f"\n🌍 *Хостинг:*\n"
+        f"🧩 IP: `{ip_info.get('ip', 'неизвестен')}`\n"
+        f"🏳️ Страна: {ip_info.get('country', 'Unknown')}\n"
+        f"🏢 Организация: {ip_info.get('org', 'Unknown')}\n"
+        f"🛰 ASN: {ip_info.get('asn', 'Unknown')}\n"
+        f"📦 CDN: {infra.get('cdn', 'Не определён')}\n"
+    )
+
+    # Проверка прокси / подозрительного хостинга
+    if infra.get("proxy_suspect"):
+        text += "\n🚨 *Обнаружены признаки прокси или подозрительного хостинга*"
+    else:
+        text += "\n✅ Признаков прокси или подозрительного хостинга не найдено"
+
+    # 💾 Сохраняем в кэш
+    set_cache(url, {"report": text, "results": results})
 
 @user_private_router.message()
-async def lick_checher2(message: types.Message):
-    await message.answer("Пожалуйста введите ссылку")
+async def handle_link_check_incorrect(message: types.Message):
+    await message.answer("Введите url ссылку")
+    

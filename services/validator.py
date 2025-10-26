@@ -1,14 +1,12 @@
 import aiohttp
 import validators
 
-
 async def is_working_url(url: str) -> bool:
-    # Проверка на валидность URL
+    """Проверяет, валидный ли URL и доступен ли он"""
     if not validators.url(url):
         return False
 
     try:
-        # Асинхронный GET-запрос
         async with aiohttp.ClientSession() as session:
             async with session.get(url, timeout=5) as response:
                 return response.status == 200

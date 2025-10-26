@@ -9,9 +9,12 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-
-
 from handlers.user_private import user_private_router
+
+from utils.cache import load_cache
+from utils.tasks import schedule_cache_refresh
+
+
 
 
 # bot = Bot(token=os.getenv('you_token'), default=DefaultBotProperties(parse_mode=ParseMode.HTML)) если не создавать файл .env
@@ -28,6 +31,8 @@ dp.include_router(user_private_router)
 async def on_startup(bot):
     print("Бот запущен")
 
+    load_cache()
+    asyncio.create_task(schedule_cache_refresh())
 
 
 async def on_shutdown(bot):
@@ -35,6 +40,9 @@ async def on_shutdown(bot):
 
 
 async def main():
+
+
+
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
