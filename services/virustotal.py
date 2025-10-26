@@ -1,7 +1,11 @@
 import aiohttp
 import os
+import base64
 
-VT_KEY = os.getenv("VIRUSTOTAL_KEY")
+from dotenv import find_dotenv, load_dotenv
+load_dotenv(find_dotenv())
+
+VT_KEY = os.getenv('VIRUSTOTAL_KEY')
 VT_URL = "https://www.virustotal.com/api/v3/urls"
 
 async def check_virustotal(url: str) -> dict:
@@ -15,13 +19,14 @@ async def check_virustotal(url: str) -> dict:
 
         # Теперь получить анализ
         async with session.get(f"{VT_URL}/{url_id}") as resp:
+            print(await resp.text())
             data = await resp.json()
             stats = data["data"]["attributes"]["last_analysis_stats"]
 
             # можно делать собственный риск на основе stats
             malicious = stats.get("malicious", 0)
             suspicious = stats.get("suspicious", 0)
-
             if malicious > 0 or suspicious > 0:
                 return {"status": "danger", "details": stats}
+                
             return {"status": "clean", "details": stats}

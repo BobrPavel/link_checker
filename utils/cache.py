@@ -3,13 +3,16 @@ import time
 import os
 import asyncio
 from typing import Optional
-from services.url_validator import is_working_url
+from services.validator import is_working_url
+
 from services.google_safe_browsing import check_google_safebrowsing
 from services.virustotal import check_virustotal
 from services.blacklist_check import check_blacklists
 from utils.scoring import calculate_risk_score
 
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "common", "cache.json")
+CACHE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "common", "cache.json")
+
+
 TTL = 60 * 30  # 30 минут
 _cache = {}
 

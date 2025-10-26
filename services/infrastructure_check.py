@@ -4,6 +4,8 @@ import datetime
 import aiohttp
 import re
 
+from services.whois_check import fetch_whois_data
+
 async def get_ssl_info(hostname: str) -> dict:
     """Проверяет SSL-сертификат и его срок действия"""
     context = ssl.create_default_context()
@@ -91,17 +93,20 @@ async def check_infrastructure(url: str) -> dict:
     ip_info = await get_ip_info(hostname)
     cdn = await detect_cdn(ip_info.get("org", ""))
 
+    # ⚡ WHOIS / возраст домена
+    whois_data = await fetch_whois_data(hostname)
+
     is_https = url.startswith("https://")
     proxy_suspect = any(
         term in (ip_info.get("org") or "").lower()
         for term in ["vpn", "proxy", "tor", "hosting", "server"]
     )
-
     return {
         "hostname": hostname,
         "is_https": is_https,
         "ssl_info": ssl_info,
         "ip_info": ip_info,
         "cdn": cdn,
-        "proxy_suspect": proxy_suspect
+        "proxy_suspect": proxy_suspect,
+        "whois": whois_data,
     }

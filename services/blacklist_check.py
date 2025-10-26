@@ -15,3 +15,4 @@ async def check_blacklists(url: str) -> dict:
                     if url in text:
                         return {"status": "danger", "details": {"blacklist": bl_url}}
     return {"status": "clean", "details": None}
+    

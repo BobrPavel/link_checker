@@ -1,6 +1,8 @@
 import asyncio
 import datetime
-from cache import refresh_cache
+
+from utils.cache import refresh_cache
+
 
 async def schedule_cache_refresh():
     """Фоновая задача: обновляет кэш каждый день в 00:00"""

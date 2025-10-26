@@ -76,6 +76,7 @@ async def handle_link_check(message: types.Message):
     # 🧾 Формирование текста отчёта
     ssl_info = infra.get("ssl_info", {})
     ip_info = infra.get("ip_info", {})
+    whois = infra.get("whois", {})
 
     text = (
         f"🔗 *Проверка ссылки:* {url}\n\n"
@@ -113,6 +114,17 @@ async def handle_link_check(message: types.Message):
         text += "\n🚨 *Обнаружены признаки прокси или подозрительного хостинга*"
     else:
         text += "\n✅ Признаков прокси или подозрительного хостинга не найдено"
+
+    # 🕵️ WHOIS / история домена
+    text += (
+        f"\n📖 *Данные о домене:*\n"
+        f"🗓 Дата регистрации: {whois.get('created', 'Unknown')}\n"
+        f"🏢 Регистратор: {whois.get('registrar', 'Unknown')}\n"
+        f"📆 Возраст домена: {whois.get('age_days', 'N/A')} дней (~{whois.get('age_years', 0)} лет)\n"
+        f"🕐 Срок действия до: {whois.get('expires', 'Unknown')}\n"
+        f"🧭 Риск: {whois.get('freshness', 'N/A')} (риск: {whois.get('risk', 'N/A')})\n"
+    )
+    
 
     # 💾 Сохраняем в кэш
     set_cache(url, {"report": text, "results": results})
