@@ -1,1 +1,252 @@
-{"https://github.com": {"timestamp": 1761484461.0288658, "data": {"report": "🔗 *Проверка ссылки:* https://github.com\n\n🧭 Google Safe Browsing: clean\n🧪 VirusTotal: clean\n🚨 Blacklists: clean\n\n⚠️ *Уровень риска:* НИЗКИЙ (0 баллов)\n\n🌐 *Инфраструктура сайта:*\n🏠 Домен: `github.com`\n🔒 HTTPS: Да\n📜 Сертификат выдан: *Sectigo Limited*\n📅 Действителен до: `2026-02-05 23:59:59`\n🕐 Осталось дней: `102`\n\n🌍 *Хостинг:*\n🧩 IP: `140.82.121.4`\n🏳️ Страна: Germany\n🏢 Организация: GITHUB\n🛰 ASN: AS36459\n📦 CDN: Не используется или неизвестен\n\n✅ Признаков прокси или подозрительного хостинга не найдено\n📖 *Данные о домене:*\n🗓 Дата регистрации: Unknown\n🏢 Регистратор: Unknown\n📆 Возраст домена: N/A дней (~0 лет)\n🕐 Срок действия до: Unknown\n🧭 Риск: N/A (риск: N/A)\n", "results": {"google": {"status": "clean", "details": null}, "vt": {"status": "clean", "details": {"malicious": 0, "suspicious": 0, "undetected": 26, "harmless": 72, "timeout": 0}}, "blacklist": {"status": "clean", "details": null}, "infra": {"hostname": "github.com", "is_https": true, "ssl_info": {"valid": true, "issued_to": "github.com", "issued_by": "Sectigo Limited", "valid_from": "2025-02-05 00:00:00", "valid_to": "2026-02-05 23:59:59", "days_left": 102}, "ip_info": {"ip": "140.82.121.4", "country": "Germany", "org": "GITHUB", "asn": "AS36459"}, "cdn": "Не используется или неизвестен", "proxy_suspect": false, "whois": {"error": "WHOIS error: can't subtract offset-naive and offset-aware datetimes"}}}}}}
+{
+  "https://www.twitch.tv": {
+    "timestamp": 1761834688.863315,
+    "data": {
+      "report": "🔗 *Проверка ссылки:* `https://www\\.twitch\\.tv`\n\n🧭 Google Safe Browsing: clean\n🧪 VirusTotal: clean\n🚨 Blacklists: clean\n\n⚠️ *Уровень риска:* *НИЗКИЙ*\n📊 *Баллы:* 0/100\n⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜\n\n🌐 *Инфраструктура сайта:*\n🏠 Домен: `www\\.twitch\\.tv`\n🔒 HTTPS: Да\n📜 Сертификат выдан: *GlobalSign nv\\-sa*\n📅 Действителен до: `2026\\-06\\-08 21:43:10`\n🕐 Осталось дней: `221`\n\n🌍 *Хостинг:*\n🧩 IP: `199\\.232\\.174\\.214`\n🏳️ Страна: Sweden\n🏢 Организация: FASTLY\n🛰 ASN: AS54113\n📦 CDN: Fastly\n\n✅ Признаков прокси или подозрительного хостинга не найдено\n\n📖 *Данные о домене:*\n🗓 Дата регистрации: Unknown\n🏢 Регистратор: Unknown\n📆 Возраст домена: N/A дней (~0 лет)\n🕐 Срок действия до: Unknown\n🧭 Риск: N/A (риск: N/A)\n\n🔍 *Аналитика ссылки:*\nNone\n🔁 Редиректов: 0\n🪟 Iframe: 0\n🔗 Внутренние ссылки: 0, внешние: 0\n",
+      "results": {
+        "google": {
+          "status": "clean",
+          "details": null
+        },
+        "vt": {
+          "status": "clean",
+          "details": {
+            "malicious": 0,
+            "suspicious": 0,
+            "undetected": 28,
+            "harmless": 70,
+            "timeout": 0
+          }
+        },
+        "blacklist": {
+          "status": "clean",
+          "details": null
+        },
+        "infra": {
+          "hostname": "www.twitch.tv",
+          "is_https": true,
+          "ssl_info": {
+            "valid": true,
+            "issued_to": "twitch.tv",
+            "issued_by": "GlobalSign nv-sa",
+            "valid_from": "2025-05-07 21:43:11",
+            "valid_to": "2026-06-08 21:43:10",
+            "days_left": 221
+          },
+          "ip_info": {
+            "ip": "199.232.174.214",
+            "country": "Sweden",
+            "org": "FASTLY",
+            "asn": "AS54113"
+          },
+          "cdn": "Fastly",
+          "proxy_suspect": false,
+          "whois": {
+            "error": "WHOIS data not available (HTTP 404)"
+          }
+        },
+        "link_analysis": {
+          "masked_domain": null,
+          "is_punycode": false,
+          "redirect_count": 0,
+          "iframe_count": 0,
+          "internal_links": 0,
+          "external_links": 0,
+          "tracking_params": [],
+          "risk_flags": []
+        }
+      }
+    }
+  },
+  "https://rutube.ru": {
+    "timestamp": 1761834784.33615,
+    "data": {
+      "report": "🔗 *Проверка ссылки:* `https://rutube.ru`\n\n🧭 Google Safe Browsing: clean\n🧪 VirusTotal: clean\n🚨 Blacklists: clean\n\n⚠️ *Уровень риска:* *НИЗКИЙ*\n📊 *Баллы:* 0/100\n⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜\n\n🌐 *Инфраструктура сайта:*\n🏠 Домен: `rutube.ru`\n🔒 HTTPS: Да\n📜 Сертификат выдан: *GlobalSign nv-sa*\n📅 Действителен до: `2025-11-26 12:17:44`\n🕐 Осталось дней: `26`\n\n🌍 *Хостинг:*\n🧩 IP: `178.248.233.148`\n🏳️ Страна: Russia\n🏢 Организация: HLL LLC\n🛰 ASN: AS51115\n📦 CDN: Не используется или неизвестен\n\n✅ Признаков прокси или подозрительного хостинга не найдено\n\n📖 *Данные о домене:*\n🗓 Дата регистрации: Unknown\n🏢 Регистратор: Unknown\n📆 Возраст домена: N/A дней (~0 лет)\n🕐 Срок действия до: Unknown\n🧭 Риск: N/A (риск: N/A)\n\n🔍 *Аналитика ссылки:*\n🔁 Редиректов: 0\n🪟 Iframe: 0\n🔗 Внутренние ссылки: 315, внешние: 25\n",
+      "results": {
+        "google": {
+          "status": "clean",
+          "details": null
+        },
+        "vt": {
+          "status": "clean",
+          "details": {
+            "malicious": 0,
+            "suspicious": 0,
+            "undetected": 26,
+            "harmless": 72,
+            "timeout": 0
+          }
+        },
+        "blacklist": {
+          "status": "clean",
+          "details": null
+        },
+        "infra": {
+          "hostname": "rutube.ru",
+          "is_https": true,
+          "ssl_info": {
+            "valid": true,
+            "issued_to": "*.rutube.ru",
+            "issued_by": "GlobalSign nv-sa",
+            "valid_from": "2024-10-25 12:17:45",
+            "valid_to": "2025-11-26 12:17:44",
+            "days_left": 26
+          },
+          "ip_info": {
+            "ip": "178.248.233.148",
+            "country": "Russia",
+            "org": "HLL LLC",
+            "asn": "AS51115"
+          },
+          "cdn": "Не используется или неизвестен",
+          "proxy_suspect": false,
+          "whois": {
+            "error": "WHOIS data not available (HTTP 404)"
+          }
+        },
+        "link_analysis": {
+          "masked_domain": null,
+          "is_punycode": false,
+          "redirect_count": 0,
+          "iframe_count": 0,
+          "internal_links": 315,
+          "external_links": 25,
+          "tracking_params": [],
+          "risk_flags": []
+        }
+      }
+    }
+  },
+  "https://yandex.ru/project/browser/search/17?utm_term=яндекс&banerid=0600003000&utm_campaign=search_brand_main%7C78770231&utm_medium=search&from=direct_serp&yclid=8379413462868295679&ybaip=1&utm_content=5039753714%7C12821757164&utm_source=yandex": {
+    "timestamp": 1761834923.5871968,
+    "data": {
+      "report": "🔗 *Проверка ссылки:* `https://yandex.ru/project/browser/search/17?utm_term=яндекс&banerid=0600003000&utm_campaign=search_brand_main%7C78770231&utm_medium=search&from=direct_serp&yclid=8379413462868295679&ybaip=1&utm_content=5039753714%7C12821757164&utm_source=yandex`\n\n🧭 Google Safe Browsing: clean\n🧪 VirusTotal: submitted\n🚨 Blacklists: clean\n\n⚠️ *Уровень риска:* *НИЗКИЙ*\n📊 *Баллы:* 10/100\n🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜\n\n💡 *Причины начисления баллов:*\n• 📊 Найдены трекинговые параметры в URL\n\n🌐 *Инфраструктура сайта:*\n🏠 Домен: `yandex.ru`\n🔒 HTTPS: Да\n📜 Сертификат выдан: *GlobalSign nv-sa*\n📅 Действителен до: `2026-02-23 20:59:59`\n🕐 Осталось дней: `116`\n\n🌍 *Хостинг:*\n🧩 IP: `5.255.255.77`\n🏳️ Страна: Russia\n🏢 Организация: YANDEX LLC\n🛰 ASN: AS13238\n📦 CDN: Не используется или неизвестен\n\n✅ Признаков прокси или подозрительного хостинга не найдено\n\n📖 *Данные о домене:*\n🗓 Дата регистрации: Unknown\n🏢 Регистратор: Unknown\n📆 Возраст домена: N/A дней (~0 лет)\n🕐 Срок действия до: Unknown\n🧭 Риск: N/A (риск: N/A)\n\n🔍 *Аналитика ссылки:*\n🔁 Редиректов: 0\n🪟 Iframe: 0\n🔗 Внутренние ссылки: 1, внешние: 1\n📊 Трекинговые параметры: utm_term, utm_campaign, utm_medium, yclid, utm_content, utm_source\n⚠️ Подозрительные признаки: tracking\n",
+      "results": {
+        "google": {
+          "status": "clean",
+          "details": null
+        },
+        "vt": {
+          "status": "submitted",
+          "details": {
+            "data": {
+              "type": "analysis",
+              "id": "u-9cbb57aba3bd266fe91fe37d3ba62890e0cd2d5b055048844959dc4cffff98dd-8131ea43",
+              "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/u-9cbb57aba3bd266fe91fe37d3ba62890e0cd2d5b055048844959dc4cffff98dd-8131ea43"
+              }
+            }
+          }
+        },
+        "blacklist": {
+          "status": "clean",
+          "details": null
+        },
+        "infra": {
+          "hostname": "yandex.ru",
+          "is_https": true,
+          "ssl_info": {
+            "valid": true,
+            "issued_to": "*.yandex.tr",
+            "issued_by": "GlobalSign nv-sa",
+            "valid_from": "2025-08-26 08:03:35",
+            "valid_to": "2026-02-23 20:59:59",
+            "days_left": 116
+          },
+          "ip_info": {
+            "ip": "5.255.255.77",
+            "country": "Russia",
+            "org": "YANDEX LLC",
+            "asn": "AS13238"
+          },
+          "cdn": "Не используется или неизвестен",
+          "proxy_suspect": false,
+          "whois": {
+            "error": "WHOIS data not available (HTTP 404)"
+          }
+        },
+        "link_analysis": {
+          "masked_domain": null,
+          "is_punycode": false,
+          "redirect_count": 0,
+          "iframe_count": 0,
+          "internal_links": 1,
+          "external_links": 1,
+          "tracking_params": [
+            "utm_term",
+            "utm_campaign",
+            "utm_medium",
+            "yclid",
+            "utm_content",
+            "utm_source"
+          ],
+          "risk_flags": [
+            "tracking"
+          ]
+        }
+      }
+    }
+  },
+  "https://de.shein.com/?onelink=10/4ivi7j3cevpg&requestId=olw-55moriti4j6w&url_from=affiliate_af_b_68_98_0&click_id=gx-row-shein-shein-sd&cdn_rsite=cf&ref=www&rep=dir&ret=de": {
+    "timestamp": 1761835063.4052777,
+    "data": {
+      "report": "🔗 *Проверка ссылки:* `https://de.shein.com/?onelink=10/4ivi7j3cevpg&requestId=olw-55moriti4j6w&url_from=affiliate_af_b_68_98_0&click_id=gx-row-shein-shein-sd&cdn_rsite=cf&ref=www&rep=dir&ret=de`\n\n🧭 Google Safe Browsing: clean\n🧪 VirusTotal: submitted\n🚨 Blacklists: clean\n\n⚠️ *Уровень риска:* *НИЗКИЙ*\n📊 *Баллы:* 0/100\n⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜\n\n🌐 *Инфраструктура сайта:*\n🏠 Домен: `de.shein.com`\n🔒 HTTPS: Да\n📜 Сертификат выдан: *DigiCert Inc*\n📅 Действителен до: `2026-07-26 23:59:59`\n🕐 Осталось дней: `269`\n\n🌍 *Хостинг:*\n🧩 IP: `23.216.134.211`\n🏳️ Страна: Sweden\n🏢 Организация: Akamai International B.V.\n🛰 ASN: AS20940\n📦 CDN: Akamai\n\n✅ Признаков прокси или подозрительного хостинга не найдено\n\n📖 *Данные о домене:*\n🗓 Дата регистрации: Unknown\n🏢 Регистратор: Unknown\n📆 Возраст домена: N/A дней (~0 лет)\n🕐 Срок действия до: Unknown\n🧭 Риск: N/A (риск: N/A)\n\n🔍 *Аналитика ссылки:*\n🔁 Редиректов: 0\n🪟 Iframe: 0\n🔗 Внутренние ссылки: 0, внешние: 0\n",
+      "results": {
+        "google": {
+          "status": "clean",
+          "details": null
+        },
+        "vt": {
+          "status": "submitted",
+          "details": {
+            "data": {
+              "type": "analysis",
+              "id": "u-b3f4f2cbc2b4b4d93bd7005db5bc1915803a15349cac21d3d0d4339f28e5b04e-486980e4",
+              "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/u-b3f4f2cbc2b4b4d93bd7005db5bc1915803a15349cac21d3d0d4339f28e5b04e-486980e4"
+              }
+            }
+          }
+        },
+        "blacklist": {
+          "status": "clean",
+          "details": null
+        },
+        "infra": {
+          "hostname": "de.shein.com",
+          "is_https": true,
+          "ssl_info": {
+            "valid": true,
+            "issued_to": "*.shein.com",
+            "issued_by": "DigiCert Inc",
+            "valid_from": "2025-07-25 00:00:00",
+            "valid_to": "2026-07-26 23:59:59",
+            "days_left": 269
+          },
+          "ip_info": {
+            "ip": "23.216.134.211",
+            "country": "Sweden",
+            "org": "Akamai International B.V.",
+            "asn": "AS20940"
+          },
+          "cdn": "Akamai",
+          "proxy_suspect": false,
+          "whois": {
+            "error": "WHOIS data not available (HTTP 404)"
+          }
+        },
+        "link_analysis": {
+          "masked_domain": null,
+          "is_punycode": false,
+          "redirect_count": 0,
+          "iframe_count": 0,
+          "internal_links": 0,
+          "external_links": 0,
+          "tracking_params": [],
+          "risk_flags": [],
+          "error": ""
+        }
+      }
+    }
+  }
+}

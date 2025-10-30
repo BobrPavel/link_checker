@@ -15,11 +15,7 @@ from utils.cache import load_cache
 from utils.tasks import schedule_cache_refresh
 
 
-
-
-# bot = Bot(token=os.getenv('you_token'), default=DefaultBotProperties(parse_mode=ParseMode.HTML)) если не создавать файл .env
-
-bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML)) # если создать файл .env
+bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN)) # если создать файл .env
 bot.my_admins_list = []
 
 dp = Dispatcher()
