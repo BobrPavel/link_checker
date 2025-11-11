@@ -1,5 +1,3 @@
-import html
-
 import asyncio
 
 from aiogram import types, F
@@ -55,17 +53,15 @@ async def help_cmd(message: types.Message):
 async def handle_link_check(message: types.Message):
     url = message.text.strip()
 
-    safe_url = html.escape(url)
-
     # 🔎 Проверяем валидность
     if not await is_working_url(url):
         await message.answer("🚫 Невалидная или недоступная ссылка.")
         return
 
     # ⚡ Проверяем кэш
-    cached = get_cache(safe_url)
+    cached = get_cache(url)
     if cached:
-        await message.answer(f"⚡ Результат из кэша:\n{cached['report']}", parse_mode="HTML")
+        await message.answer(f"⚡ Результат из кэша:\n{cached['report']}", parse_mode="Markdown")
         return
 
     await message.answer("🔍 Выполняю расширенную проверку сайта...")
@@ -77,7 +73,7 @@ async def handle_link_check(message: types.Message):
         check_blacklists(url),
         check_infrastructure(url),
         analyze_link(url),
-        return_exceptions=True, 
+        return_exceptions=True,  # ← ключевой момент
     )
 
     # Безопасно извлекаем результаты
@@ -120,47 +116,45 @@ async def handle_link_check(message: types.Message):
     ip_info = infra.get("ip_info", {})
     whois = infra.get("whois", {})
 
-
-
     text = (
-        f"🔗 <b>Проверка ссылки:</b> <code>{safe_url}</code>\n\n"
+        f"🔗 *Проверка ссылки:* `{url}`\n\n"
         f"🧭 Google Safe Browsing: {google_res['status']}\n"
         f"🧪 VirusTotal: {vt_res['status']}\n"
         f"🚨 Blacklists: {bl_res['status']}\n\n"
-        f"⚠️ <b>Уровень риска:</b> <b>{level.upper()}</b>\n"
-        f"📊 <b>Баллы:</b> {score}/100\n"
+        f"⚠️ *Уровень риска:* *{level.upper()}*\n"
+        f"📊 *Баллы:* {score}/100\n"
         f"{bar}\n\n"
     )
 
     if unavailable:
-        text += f"⚠️ <b>Недоступны сервисы:</b> {', '.join(unavailable)}\n\n"
+        text += f"⚠️ *Недоступны сервисы:* {', '.join(unavailable)}\n\n"
 
     if reasons:
-        text += "💡 <b>Причины начисления баллов:</b>\n"
+        text += "💡 *Причины начисления баллов:*\n"
         for r in reasons:
             text += f"• {r}\n"
         text += "\n"
 
     text += (
-        f"🌐 <b>Инфраструктура сайта:</b>\n"
-        f"🏠 Домен: <code>{infra.get('hostname', 'N/A')}</code>\n"
+        f"🌐 *Инфраструктура сайта:*\n"
+        f"🏠 Домен: `{infra.get('hostname', 'N/A')}`\n"
         f"🔒 HTTPS: {'Да' if infra.get('is_https') else 'Нет'}\n"
     )
 
     # SSL
     if ssl_info.get("valid"):
         text += (
-            f"📜 Сертификат выдан: <b>{ssl_info.get('issued_by', 'N/A')}</b>\n"
-            f"📅 Действителен до: <code>{ssl_info.get('valid_to', 'N/A')}</code>\n"
-            f"🕐 Осталось дней: <code>{ssl_info.get('days_left', 'N/A')}</code>\n"
+            f"📜 Сертификат выдан: *{ssl_info.get('issued_by', 'N/A')}*\n"
+            f"📅 Действителен до: `{ssl_info.get('valid_to', 'N/A')}`\n"
+            f"🕐 Осталось дней: `{ssl_info.get('days_left', 'N/A')}`\n"
         )
     else:
         text += f"⚠️ SSL: {ssl_info.get('error', 'Нет данных')}\n"
 
     # IP и хостинг
     text += (
-        f"\n🌍 <b>Хостинг:</b>\n"
-        f"🧩 IP: <code>{ip_info.get('ip', 'неизвестен')}</code>\n"
+        f"\n🌍 *Хостинг:*\n"
+        f"🧩 IP: `{ip_info.get('ip', 'неизвестен')}`\n"
         f"🏳️ Страна: {ip_info.get('country', 'Unknown')}\n"
         f"🏢 Организация: {ip_info.get('org', 'Unknown')}\n"
         f"🛰 ASN: {ip_info.get('asn', 'Unknown')}\n"
@@ -168,13 +162,13 @@ async def handle_link_check(message: types.Message):
     )
 
     if infra.get("proxy_suspect"):
-        text += "\n🚨 <b>Обнаружены признаки прокси или подозрительного хостинга</b>\n"
+        text += "\n🚨 *Обнаружены признаки прокси или подозрительного хостинга*\n"
     else:
         text += "\n✅ Признаков прокси или подозрительного хостинга не найдено\n"
 
     # WHOIS
     text += (
-        f"\n📖 <b>Данные о домене:</b>\n"
+        f"\n📖 *Данные о домене:*\n"
         f"🗓 Дата регистрации: {whois.get('created', 'Unknown')}\n"
         f"🏢 Регистратор: {whois.get('registrar', 'Unknown')}\n"
         f"📆 Возраст домена: {whois.get('age_days', 'N/A')} дней (~{whois.get('age_years', 0)} лет)\n"
@@ -183,11 +177,11 @@ async def handle_link_check(message: types.Message):
     )
 
     # Аналитика
-    text += "\n🔍 <b>Аналитика ссылки:</b>\n"
+    text += "\n🔍 *Аналитика ссылки:*\n"
     if link_info.get("masked_domain"):
         text += f"{link_info['masked_domain']}\n"
     if link_info.get("is_punycode"):
-        text += "⚠️ Домен использует <b>Punycode</b> (возможная подмена символов)\n"
+        text += "⚠️ Домен использует *Punycode* (возможная подмена символов)\n"
     text += f"🔁 Редиректов: {link_info.get('redirect_count', 0)}\n"
     text += f"🪟 Iframe: {link_info.get('iframe_count', 0)}\n"
     text += f"🔗 Внутренние ссылки: {link_info.get('internal_links', 0)}, внешние: {link_info.get('external_links', 0)}\n"
@@ -199,5 +193,4 @@ async def handle_link_check(message: types.Message):
     # 💾 Кэшируем результат
     set_cache(url, {"report": text, "results": results})
 
-    await message.answer(text, parse_mode="HTML")
-
+    await message.answer(text, parse_mode="Markdown")

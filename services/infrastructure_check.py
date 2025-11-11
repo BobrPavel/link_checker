@@ -110,3 +110,4 @@ async def check_infrastructure(url: str) -> dict:
         "proxy_suspect": proxy_suspect,
         "whois": whois_data,
     }
+
